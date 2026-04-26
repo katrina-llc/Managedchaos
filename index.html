@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managed Chaos Podcast | The Podcast for Startups</title>
+<meta name="description" content="You can't outsell a broken system. Managed Chaos is the podcast for founders, operators, and leaders who are done pretending that hustle alone scales a business. Hosted by Katrina Purcell.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1e2d6b;
+    --navy-light: #1a2e45;
+    --royal: #2d3a8c;
+    --neon-pink: #ff2d78;
+    --neon-green: #39ff8f;
+    --white: #f0f4f8;
+    --muted: rgba(240,244,248,0.55);
+    --border: rgba(255,45,120,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(13,27,42,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--neon-pink); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--neon-green); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--neon-green);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .accent { color: var(--neon-pink); }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--neon-pink);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: #ff5596;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 13px 28px;
+    border: 1px solid rgba(240,244,248,0.3);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--neon-green);
+    color: var(--neon-green);
+    transform: translateY(-1px);
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-wrap::before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255,45,120,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .podcast-cover {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 60px rgba(255,45,120,0.2), 0 0 120px rgba(57,255,143,0.08);
+  }
+
+  /* glow lines background */
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-bg-lines::before,
+  .hero-bg-lines::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(57,255,143,0.06);
+  }
+
+  .hero-bg-lines::before {
+    width: 600px;
+    height: 600px;
+    top: -100px;
+    right: -200px;
+  }
+
+  .hero-bg-lines::after {
+    width: 900px;
+    height: 900px;
+    top: -250px;
+    right: -400px;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: rgba(57,255,143,0.2);
+    max-width: 60px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--navy-mid); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.25rem;
+    color: var(--white);
+  }
+
+  .about p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .about-cover {
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 0.5px solid var(--border);
+    box-shadow: 0 0 80px rgba(255,45,120,0.15);
+  }
+
+  .about-image-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .host-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 0.5px solid var(--border);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .host-photo {
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    object-position: top;
+    border: 0.5px solid var(--border);
+    box-shadow: 0 0 60px rgba(57,255,143,0.1);
+  }
+
+  .host-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    margin-bottom: 0.75rem;
+  }
+
+  .host-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .host-bio {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  /* LISTEN ON */
+  .listen { border-bottom: 0.5px solid var(--border); }
+
+  .listen h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .platform-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .platform-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border: 0.5px solid rgba(240,244,248,0.2);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .platform-btn:hover {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    transform: translateY(-2px);
+  }
+
+  .platform-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* EPISODES */
+  .episodes { background: var(--navy-light); border-bottom: 0.5px solid var(--border); }
+
+  .episodes h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.03em;
+    margin-bottom: 2.5rem;
+  }
+
+  .episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    border: 0.5px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .episode-card {
+    padding: 1.75rem;
+    background: var(--navy-light);
+    border-right: 0.5px solid var(--border);
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .episode-card:last-child { border-right: none; }
+
+  .episode-card:hover { background: var(--navy-mid); }
+
+  .ep-season {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    margin-bottom: 10px;
+  }
+
+  .ep-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.45;
+    margin-bottom: 10px;
+  }
+
+  .ep-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .ep-date {
+    font-size: 11px;
+    color: rgba(240,244,248,0.3);
+    margin-top: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .episodes-cta {
+    text-align: center;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--navy-mid); border-bottom: 0.5px solid var(--border); }
+
+  .testimonials h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.03em;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    border: 0.5px solid var(--border);
+    padding: 2rem;
+    background: rgba(255,45,120,0.04);
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '\201C';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: var(--neon-pink);
+    opacity: 0.3;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.75;
+    padding-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-attr {
+    margin-top: 1.25rem;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--neon-green);
+  }
+
+  /* GUIDE + SUBSTACK */
+  .ctas { border-bottom: 0.5px solid var(--border); }
+
+  .ctas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .cta-card {
+    border: 0.5px solid var(--border);
+    padding: 2.5rem;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .cta-card.featured {
+    border-color: var(--neon-pink);
+    background: rgba(255,45,120,0.06);
+  }
+
+  .cta-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    border: 0.5px solid var(--neon-pink);
+    padding: 3px 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .cta-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--neon-pink); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--neon-green); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(240,244,248,0.25);
+    letter-spacing: 0.05em;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-buttons { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-image-wrap { animation: fadeUp 0.8s 0.2s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-image-wrap { order: -1; }
+    .podcast-cover { width: 200px; height: 200px; }
+
+    .section-inner { padding: 3.5rem 1.5rem; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-image-wrap { order: -1; }
+    .about-cover { max-width: 240px; }
+
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .ctas-grid { grid-template-columns: 1fr; }
+
+    .episodes-grid { grid-template-columns: 1fr; }
+    .episode-card { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .episode-card:last-child { border-bottom: none; }
+
+    footer { padding: 2rem 1.5rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Managed <span>Chaos</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#episodes">Episodes</a></li>
+    <li><a href="#listen">Listen</a></li>
+    <li><a href="#guide">Free Guide</a></li>
+    <li><a href="https://managedchaospodcast.substack.com" target="_blank">Substack</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">Now in Season 3</div>
+      <h1>You can't outsell a <span class="accent">broken</span> system.</h1>
+      <p class="hero-sub">The podcast for founders, operators, and leaders who are done pretending that hustle alone scales a business. Sharp, no-fluff episodes delivered in less time than it takes to get to work.</p>
+      <div class="hero-buttons">
+        <a href="https://www.youtube.com/@ManagedChaosPodcast" target="_blank" class="btn-primary">Browse all episodes</a>
+        <a href="#guide" class="btn-secondary">Get the free guide</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <!-- Replace src with your actual podcast cover art file path -->
+      <img src="img/Managed Chaos Podcast final.jpg" alt="Managed Chaos Podcast cover art" class="podcast-cover">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">About the show</div>
+        <h2>Business building, no fluff.</h2>
+        <p>Managed Chaos is a business podcast built for leaders navigating the gap between a great idea and a company that actually runs. Each episode is about 15 minutes long, designed to give you actionable things you can implement today.</p>
+        <p>From IP protection to go-to-market strategy and everything in between, we have an episode for you. Hosted by Katrina Purcell, fractional COO and founder of Katrina Purcell LLC.</p>
+      </div>
+      <div class="about-image-wrap">
+        <img src="img/Managed Chaos Podcast final.jpg" alt="Managed Chaos Podcast" class="about-cover">
+      </div>
+    </div>
+    <div class="host-section">
+      <img src="img/Katrina_by_PortraitMadame-6-WEB.jpg" alt="Katrina Purcell, host of Managed Chaos Podcast" class="host-photo">
+      <div>
+        <div class="host-label">Your host</div>
+        <div class="host-name">Katrina Purcell</div>
+        <p class="host-bio">Katrina Purcell is a Columbia Business School graduate with over 20 years of experience in B2B technology. She drives organizational transformation by leveraging her expertise in process optimization, SOPs, and change management. As the founder of Katrina Purcell LLC, a growth operations consultancy, she partners with ambitious tech startups and nonprofits, delivering strategic guidance and tailored solutions that unlock their full potential.</p>
+        <a href="https://katrinapurcell.com" target="_blank" class="btn-secondary" style="display:inline-block;">Visit katrinapurcell.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTEN ON -->
+<section class="listen" id="listen">
+  <div class="section-inner">
+    <div class="section-label">Find us everywhere</div>
+    <h2>Listen on</h2>
+    <div class="platform-row">
+      <a href="https://open.spotify.com/show/5ninPwWbyghbAcXplIeFYl" target="_blank" class="platform-btn">
+        <div class="platform-dot" style="background:#1db954;"></div> Spotify
+      </a>
+      <a href="https://podcasts.apple.com/us/podcast/managed-chaos-podcast/id1747550275" target="_blank" class="platform-btn">
+        <div class="platform-dot" style="background:#fc3c44;"></div> Apple Podcasts
+      </a>
+      <a href="https://www.youtube.com/@ManagedChaosPodcast" target="_blank" class="platform-btn">
+        <div class="platform-dot" style="background:#ff0000;"></div> YouTube
+      </a>
+      <a href="https://www.instagram.com/managedchaospodcast" target="_blank" class="platform-btn">
+        <div class="platform-dot" style="background:#e1306c;"></div> Instagram
+      </a>
+      <a href="https://managedchaospodcast.substack.com" target="_blank" class="platform-btn">
+        <div class="platform-dot" style="background:#ff6719;"></div> Substack
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT EPISODES -->
+<section class="episodes" id="episodes">
+  <div class="section-inner">
+    <div class="section-label">What we have been covering</div>
+    <h2>Recent episodes</h2>
+    <div class="episodes-grid">
+      <a href="https://www.youtube.com/@ManagedChaosPodcast" target="_blank" class="episode-card">
+        <div class="ep-season">Season 3 · Latest</div>
+        <div class="ep-title">Season 3 is live — visit our YouTube channel for the latest episode</div>
+        <div class="ep-desc">New episodes dropping now. Subscribe so you never miss one.</div>
+        <div class="ep-date">Season 3 · 2026</div>
+      </a>
+      <a href="https://www.themanagedchaospodcast.com/episode/season-2-episode-51-2025-predictions-hits-misses-and-plot-twists-we-didn-t-see-coming" target="_blank" class="episode-card">
+        <div class="ep-season">Season 2 · Ep. 51</div>
+        <div class="ep-title">2025 predictions: hits, misses, and plot twists we didn't see coming</div>
+        <div class="ep-desc">A look back at the predictions made at the start of 2025, breaking down what landed, what surprised, and what still feels unresolved heading into the new year.</div>
+        <div class="ep-date">Dec 17, 2025</div>
+      </a>
+      <a href="https://www.themanagedchaospodcast.com/episode/season-2-episode-50-taming-the-chaos-without-losing-momentum" target="_blank" class="episode-card">
+        <div class="ep-season">Season 2 · Ep. 50</div>
+        <div class="ep-title">Taming the chaos without losing momentum</div>
+        <div class="ep-desc">How operators and leaders can build clarity into their systems, support executives through ambiguity, and use community intelligence to grow stronger in their roles.</div>
+        <div class="ep-date">Dec 10, 2025</div>
+      </a>
+    </div>
+    <div class="episodes-cta">
+      <a href="https://www.youtube.com/@ManagedChaosPodcast" target="_blank" class="btn-secondary">Browse all episodes on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">From our listeners</div>
+    <h2>What people are saying</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">I liked your idea on the growth mindset episode — immersing yourself in new networks and environments!</p>
+        <div class="testimonial-attr">Listener feedback · Managed Chaos Podcast</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">I need more episodes, more frequently. I was working and playing them on the side but got through them so fast!</p>
+        <div class="testimonial-attr">Listener feedback · Managed Chaos Podcast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE GUIDE + SUBSTACK -->
+<section class="ctas" id="guide">
+  <div class="section-inner">
+    <div class="ctas-grid">
+      <div class="cta-card featured">
+        <div class="cta-tag">Free resource</div>
+        <h3>Grab the free guide</h3>
+        <p>A practical resource for leaders who want to start building the systems that scale. No fluff, no filler. Just the framework.</p>
+        <p style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--neon-green); margin-top:1rem;">Coming soon</p>
+      </div>
+      <div class="cta-card">
+        <div class="cta-tag">Newsletter</div>
+        <h3>The Managed Chaos Substack</h3>
+        <p>Get the written breakdown of every episode plus bonus content delivered straight to your inbox every week.</p>
+        <a href="https://managedchaospodcast.substack.com" target="_blank" class="btn-secondary">Subscribe on Substack</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">Managed <span>Chaos</span></a>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#episodes">Episodes</a></li>
+      <li><a href="https://www.youtube.com/@ManagedChaosPodcast" target="_blank">YouTube</a></li>
+      <li><a href="https://open.spotify.com/show/5ninPwWbyghbAcXplIeFYl" target="_blank">Spotify</a></li>
+      <li><a href="https://managedchaospodcast.substack.com" target="_blank">Substack</a></li>
+      <li><a href="https://www.instagram.com/managedchaospodcast" target="_blank">Instagram</a></li>
+      <li><a href="https://katrinapurcell.com" target="_blank">Katrina Purcell LLC</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Managed Chaos Podcast™ · Hosted by Katrina Purcell</p>
+  </div>
+</footer>
+
+</body>
+</html>
